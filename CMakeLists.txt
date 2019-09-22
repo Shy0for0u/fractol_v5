@@ -9,7 +9,7 @@ set(CMAKE_C_STANDARD 99)
 include_directories("includes")
 include_directories("libft/includes")
 
-add_executable(fractol_v5 ${PROJ_SOURCES} ${LIBFT_SOURCES})
+add_executable(fractol_v5 ${PROJ_SOURCES} ${LIBFT_SOURCES} src/hooks.c)
 
 target_link_libraries(fractol_v5 "-pthread")
 target_link_libraries(fractol_v5 "-lmlx")

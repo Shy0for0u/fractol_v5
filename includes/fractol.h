@@ -13,7 +13,7 @@
 
 #define WTH 1000.0f
 #define HGT 1000.0f
-#define THR 50
+#define THR 100
 #define PART HGT / THR
 
 typedef struct			s_mlx
@@ -57,6 +57,7 @@ typedef struct			s_fcl
 	float 				tmp1;
 	float				offset1;
 	float				offset2;
+	float 				scale;
 	int 				stop_move;
 	int 				max_i;
 	int					(*f)(t_complex, void *);
@@ -66,10 +67,15 @@ typedef struct			s_fcl
 
 typedef struct			s_thr
 {
-	int 				index;
 	pthread_t			p;
+	int 				in;
+	int 				out;
 	t_fcl				fcl;
 }						t_thr;
 
+void			showing(t_fcl *f);
+t_complex		init_complex(float re, float im);
+void			hooks(t_fcl *f);
+void			apply_zoom(t_fcl *f, t_complex mouse, float z_fact);
 
 #endif //FRACTOL_V5_FRACTOL_H
