@@ -11,10 +11,10 @@
 #include <fcntl.h>
 #include "pthread.h"
 
-#define WTH 1000.0f
-#define HGT 1000.0f
-#define THR 100
-#define PART HGT / THR
+#define WTH 			1000.0f
+#define HGT 			1000.0f
+#define THR 			100
+#define PART 			HGT / THR
 
 typedef struct			s_mlx
 {
@@ -52,16 +52,16 @@ typedef struct			s_fcl
 	t_complex			min;
 	t_complex			max;
 	t_complex			factor;
-	t_pnts				pt;
+//	t_pnts				pt;
+	t_mlx				mlx;
 	float 				zoom_factor;
 	float 				tmp1;
-	float				offset1;
-	float				offset2;
+	float				offset_x;
+	float				offset_y;
 	float 				scale;
 	int 				stop_move;
 	int 				max_i;
 	int					(*f)(t_complex, void *);
-	t_mlx				mlx;
 }						t_fcl;
 
 

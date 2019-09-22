@@ -3,22 +3,21 @@
 int 			deal_key(int key, t_fcl *f)
 {
 	if (key == 123) // left
-		f->offset1 += f->tmp1;
+		f->offset_x += f->tmp1;
 	if (key == 124) // right
-		f->offset1 -= f->tmp1;
+		f->offset_x -= f->tmp1;
 	if (key == 126) // up
-		f->offset2 -= f->tmp1;
+		f->offset_y -= f->tmp1;
 	if (key == 125) // down
-		f->offset2 += f->tmp1;
+		f->offset_y += f->tmp1;
 	if (key == 6)
 		f->stop_move = (f->stop_move == 1) ? 0 : 1;
 	if (key == 53)
 		exit(0);
 	if (key == 13) // w
-		f->scale += 1.1f;
+		f->scale *= 1.1f;
 	if (key == 1) // d
-		f->scale -= 1.1f;
-	printf("offset1 %f offset2 %f tmp %f \n", f->offset1, f->offset2, f->tmp1);
+		f->scale *= 0.9f;
 	showing(f);
 	return (0);
 }
@@ -27,6 +26,12 @@ static int 			choose_zoom(t_fcl *f, int x, int y, int key)
 {
 	t_complex	mouse;
 
+//	if (key == 4)
+//	{
+//		f->zoom_factor /= 1.1f;
+//	}
+//	if (key == 5)
+//		f->zoom_factor *= 1.1f;
 	if (key == 4)
 	{
 		mouse = init_complex((float)x / (WTH / (f->max.re - f->min.re)) + f->min.re,

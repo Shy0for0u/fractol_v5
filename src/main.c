@@ -22,12 +22,11 @@ void			apply_zoom(t_fcl *f, t_complex mouse, float z_fact)
 	interpolation = 1.0f / z_fact;
 	f->min.re = mouse.re + (f->min.re - mouse.re) * interpolation;
 	f->min.im = mouse.im + (f->min.im - mouse.im) * interpolation;
-	f->max.re = mouse.re + (f->min.re - mouse.re) * interpolation;
-	f->max.im = mouse.im + (f->min.im - mouse.im) * interpolation;
+	f->max.re = mouse.re + (f->max.re - mouse.re) * interpolation; // kostil
+	f->max.im = mouse.im + (f->max.im - mouse.im) * interpolation; // kostil
 	f->factor = init_complex((f->max.re - f->min.re) / (WTH - 1),
 							 (f->max.im - f->min.im) / (HGT - 1));
 	f->tmp1 = (f->max.re - f->min.re) * 0.025f;
-	printf("%f \n", f->scale);
 }
 
 void			init_fcl(t_fcl *f)
@@ -39,10 +38,10 @@ void			init_fcl(t_fcl *f)
 	f->max_i = 100;
 	f->zoom_factor = 1.0f;
 	f->stop_move = 1;
-	f->tmp1 = 0.5f;
-	f->offset1 = 0.0f;
-	f->offset2 = 0.0f;
-	f->scale = 0.0f;
+	f->tmp1 = 1.0f;
+	f->offset_x = 0.0f;
+	f->offset_y = 0.0f;
+	f->scale = 1.0f;
 	f->min = init_complex(-2.0f * HGT / WTH, -2.0f);
 	f->max.re = 2.0f * HGT / WTH;
 	f->max.im = f->min.im + (f->max.re - f->min.re) * HGT / WTH;
@@ -134,13 +133,23 @@ void			*fractals(void *thread)
 	t_complex	c;
 
 	t = (t_thr *)thread;
+
+	float	zoom = t->fcl.zoom_factor;
+	float 	offset_x = t->fcl.offset_x * zoom;
+	float	offset_y = t->fcl.offset_y * zoom;
+
 	while (++(t->in) < t->out)
 	{
-		c.im = (t->fcl.max.im + t->fcl.offset2 - (float)t->in * t->fcl.factor.im);
+		c.im = (t->fcl.max.im + t->fcl.offset_y - (float)(t->in) * t->fcl.factor.im);
 		x = -1;
 		while (++x < (int)WTH)
 		{
-			c.re = (t->fcl.min.re + t->fcl.offset1 + (float)x * t->fcl.factor.re);
+			c.re = (t->fcl.min.re + t->fcl.offset_x + (float)x * t->fcl.factor.re);
+//			c.im = (t->fcl.max.im + t->fcl.offset_x + t->in * t->fcl.factor.im);
+//			c.re = (t->fcl.max.re + t->fcl.offset_y + x * t->fcl.factor.re);
+//			c.im = ((t->in * t->fcl.factor.im) - 2.0f + offset_y / zoom);
+//			c.re = (t->fcl.min.re + t->fcl.offset_x + (float)x * t->fcl.factor.re);
+//			c.re = ((x * t->fcl.factor.re) - 2.0f + offset_x / zoom);
 			if ((iter = t->fcl.f(c, &(t->fcl))) < t->fcl.max_i)
 				set_color(iter, x, t->in, &(t->fcl));
 			else
