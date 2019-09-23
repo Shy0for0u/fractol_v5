@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   drawing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dgorold- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/18 14:24:08 by dgorold-          #+#    #+#             */
+/*   Updated: 2019/09/23 23:20:41 by dgorold-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 void			pixel_to_img(t_fcl *f, int x, int y, t_color c)
 {
-	int 		index;
+	int			index;
 
 	index = (int)(x * 4 + f->mlx.sl * y);
 	f->mlx.data[index] = (char)c.b;
@@ -13,7 +25,7 @@ void			pixel_to_img(t_fcl *f, int x, int y, t_color c)
 void			set_color(int iter, int x, int y, t_fcl *f)
 {
 	t_color		color;
-	double 		t;
+	double		t;
 
 	t = (double)iter / f->max_i;
 	color.r = 0;
