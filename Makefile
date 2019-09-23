@@ -15,7 +15,7 @@ CC=cc
 FLAGS=-Wall -Wextra -Werror
 MLX_FINGS=-I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
-NAME=fractol_v5
+NAME=fractol
 
 ANOTH_L=./libft/
 NAME_L=libft.a

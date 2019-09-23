@@ -7,18 +7,15 @@ void			init_fcl(t_fcl *f)
 	f->mlx.img = mlx_new_image(f->mlx.mlx, WTH, HGT);
 	f->mlx.data = mlx_get_data_addr(f->mlx.img, &(f->mlx.bpp), &(f->mlx.sl), &(f->mlx.endian));
 	f->max_i = 100;
-	f->zoom_factor = 1.0f;
 	f->stop_move = 1;
 	f->tmp1 = 1.0f;
 	f->offset_x = 0.0f;
 	f->offset_y = 0.0f;
-	f->scale = 1.0f;
 	f->min = init_complex(-2.0f * HGT / WTH, -2.0f);
 	f->max.re = 2.0f * HGT / WTH;
 	f->max.im = f->min.im + (f->max.re - f->min.re) * HGT / WTH;
 	f->factor = init_complex((f->max.re - f->min.re) / (WTH - 1),
 							   (f->max.im - f->min.im) / (HGT - 1));
-
 }
 
 void			pthread_calc(t_fcl *f)
@@ -42,9 +39,36 @@ void			pthread_calc(t_fcl *f)
 	free(t);
 }
 
+void			put_point(t_fcl *f)
+{
+	int 		x;
+	int 		y;
+	t_color color;
+
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	y = -1;
+	while (++y < HGT)
+	{
+		x = -1;
+		while (++x < WTH)
+		{
+			if (x == (WTH / 2) || y == (HGT / 2))
+			{
+				color.r = (char)0xff;
+				color.g = (char)0xff;
+				color.b = (char)0xff;
+				pixel_to_img(f, x, y, color);
+			}
+		}
+	}
+}
+
 void			showing(t_fcl *f)
 {
 	pthread_calc(f);
+	put_point(f);
 	mlx_put_image_to_window(f->mlx.mlx, f->mlx.win, f->mlx.img, 0, 0);
 }
 

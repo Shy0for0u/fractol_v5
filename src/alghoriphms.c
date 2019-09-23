@@ -2,12 +2,39 @@
 
 int 			mandelbrot(t_complex c, void *f_)
 {
-	return (0);
+	int 		i;
+	t_complex	z;
+	t_fcl		*f;
+
+
+	f = (t_fcl *)f_;
+	z = init_complex(c.re, c.im);
+	i = 0;
+	while (z.re * z.re + z.im * z.im <= 4.0 && i < f->max_i)
+	{
+		z = init_complex(z.re * z.re - z.im * z.im + c.re,
+						 2.0 * z.re * z.im + c.im);
+		i++;
+	}
+	return (i);
 }
 
 int 			mandelbar(t_complex c, void *f_)
 {
-	return (0);
+	int 		i;
+	t_complex	z;
+	t_fcl		*f;
+
+	f = (t_fcl * )f_;
+	z = init_complex(c.re, c.im);
+	i = 0;
+	while (z.re * z.im + z.im * z.im <= 4 && i < f->max_i)
+	{
+		z = init_complex(z.re * z.re - z.im * z.im + c.re,
+				-2.0 * z.re * z.im + c.im);
+		i++;
+	}
+	return (i);
 }
 
 int				julia(t_complex c, void *f_)

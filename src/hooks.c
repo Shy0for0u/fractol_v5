@@ -14,10 +14,6 @@ int 			deal_key(int key, t_fcl *f)
 		f->stop_move = (f->stop_move == 1) ? 0 : 1;
 	if (key == 53)
 		exit(0);
-	if (key == 13) // w
-		f->scale *= 1.1f;
-	if (key == 1) // d
-		f->scale *= 0.9f;
 	showing(f);
 	return (0);
 }
@@ -47,13 +43,9 @@ int 			deal_mouse(int key, int x, int y, t_fcl *f)
 {
 	y = (int)HGT - y;
 	if (key == 1)
-	{
 		f->max_i += 40;
-	}
 	if (key == 2)
-	{
 		f->max_i -= 40;
-	}
 	if (key == 4 || key == 5)
 		if (choose_zoom(f, x, y, key) == 0)
 			return (0);

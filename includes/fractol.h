@@ -13,7 +13,7 @@
 
 #define WTH 			1000
 #define HGT 			1000
-#define THR 			150
+#define THR 			4
 #define PART 			HGT / THR
 
 typedef struct			s_mlx
@@ -46,18 +46,14 @@ typedef struct			s_fcl
 	t_complex			min;
 	t_complex			max;
 	t_complex			factor;
-//	t_pnts				pt;
 	t_mlx				mlx;
-	float 				zoom_factor;
 	double 				tmp1;
 	double				offset_x;
 	double				offset_y;
-	float 				scale;
 	int 				stop_move;
 	int 				max_i;
 	int					(*f)(t_complex, void *);
 }						t_fcl;
-
 
 typedef struct			s_thr
 {
